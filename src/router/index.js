@@ -1,14 +1,72 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import AppShops from '../views/AppShops.vue'
+import AppLogin from '../views/AppLogin.vue'
+import AppRegister from '../views/AppRegister.vue'
+import UsersShop from '../views/UsersShop.vue'
+import AddShop from '../views/AddShop.vue'
+import AppManagers from '../views/AppManagers.vue'
+import AddArticle from '../views/AddArticle.vue'
+import store from './../store/index'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: Home
+    name: 'shops',
+    component: AppShops,
+    meta: {
+      guest: true
+    }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: AppLogin,
+    meta: {
+      guest: true
+    }
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: AppRegister,
+    meta: {
+      guest: true
+    }
+  },
+  { 
+    path: '/my-shop',
+    name: 'my-shop',
+    component: UsersShop,
+    meta: {
+      guest: false
+    }
+  },
+  {
+    path: '/shop/create',
+    name: 'add-shop',
+    component: AddShop,
+    meta: {
+      guest: false
+    }
+  },
+  {
+    path: '/managers',
+    name: 'managers',
+    component: AppManagers,
+    meta: {
+      guest: false
+    }
+  },
+  {
+    path: '/article/create',
+    name: 'add-article',
+    component: AddArticle,
+    meta: {
+      guest: false
+    }
   },
   {
     path: '/about',
@@ -24,6 +82,17 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const isUserLoggedIn = store.getters.isUserAuthenticated
+  if (!to.meta.guest && !isUserLoggedIn) {
+    next({
+      name: 'login',
+      path: '/login'
+    })
+  }
+  return next()
 })
 
 export default router
