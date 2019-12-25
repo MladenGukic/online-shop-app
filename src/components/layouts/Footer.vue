@@ -1,5 +1,9 @@
 <template>
-  <div>buu</div>
+<footer class="footer">
+      <div class="container">
+        <span class="text-muted">The best Online Shops</span>
+      </div>
+    </footer>
 </template>
 
 <script>
@@ -8,6 +12,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style> 
+footer{
+position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem; 
+  }
 </style>

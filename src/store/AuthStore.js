@@ -3,7 +3,7 @@ import {authService } from './../services/AuthService'
 export const AuthModule = {
     state: {
         token: localStorage.getItem('token'),
-        errors: {email: '', password_confirm: ''}
+        errors: null
     },
 
     mutations: {
@@ -39,6 +39,7 @@ export const AuthModule = {
         async register(context, user) {
             try { 
                  const response = await authService.register(user)
+                 context.commit('setErrors', null)
                  return response
             } catch(exception) {
                 console.log(exception.response.data.errors) //eslint-disable-line

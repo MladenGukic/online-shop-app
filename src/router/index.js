@@ -7,6 +7,8 @@ import UsersShop from '../views/UsersShop.vue'
 import AddShop from '../views/AddShop.vue'
 import AppManagers from '../views/AppManagers.vue'
 import AddArticle from '../views/AddArticle.vue'
+import SingleManager from '../views/SingleManager.vue'
+import AddManager from '../views/AddManager.vue'
 import store from './../store/index'
 
 Vue.use(VueRouter)
@@ -56,6 +58,22 @@ const routes = [
     path: '/managers',
     name: 'managers',
     component: AppManagers,
+    meta: {
+      guest: false
+    }
+  },
+  {
+    path: '/managers/:id',
+    name: 'manager',
+    component: SingleManager,
+    meta: {
+      guest: false
+    }
+  },
+  {
+    path: '/managers/create',
+    name: 'addManager',
+    component: AddManager,
     meta: {
       guest: false
     }
