@@ -4,7 +4,8 @@
   <h1>{{manager.first_name + ' ' + manager.last_name}}</h1>
   <p class="title">Manager</p>
   <p class="title">Email: {{manager.email}}</p>
-  <p><button>Manager is aviable</button></p>
+  <p v-if="manager.shop"><button @click="navigateToShop(manager.shop.id)">{{manager.shop.name}}</button></p>
+  <p v-else><button>Manager is aviable</button></p>
 </div>
 </template>
 
@@ -13,14 +14,21 @@ import {mapGetters, mapActions} from 'vuex'
 export default {
     computed: {
         ...mapGetters({
-            manager:'manager'
+            manager:'manager',
         })
     },
 
     methods: {
         ...mapActions({
-            fetchManager: 'fetchManager'
-        })
+            fetchManager: 'fetchManager',
+        }),
+
+        navigateToShop(id) {
+          this.$router.push({
+            name: 'shop',
+            params: {id}
+          })
+        }
     },
 
     created() {

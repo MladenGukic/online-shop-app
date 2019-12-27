@@ -3,7 +3,9 @@ import {authService } from './../services/AuthService'
 export const AuthModule = {
     state: {
         token: localStorage.getItem('token'),
-        errors: null
+        errors: null,
+        registerErrors: {email: '', password: ''},
+        user: localStorage.getItem('user')
     },
 
     mutations: {
@@ -13,6 +15,14 @@ export const AuthModule = {
 
         setErrors(state, errors) {
             state.errors = errors
+        },
+
+        setRegisterErrors(state, errors) {
+            state.registerErrors = errors
+        },
+
+        setUser(state, user) {
+            state.user = user
         }
     },
 
@@ -21,6 +31,8 @@ export const AuthModule = {
             try {
                 const response = await authService.login(email, password)
                 context.commit('setToken', response.data.token)
+                context.commit('setUser', JSON.stringify(response.data.user))
+                localStorage.setItem('user', JSON.stringify(response.data.user))
                 context.commit('setErrors', null)
                 authService.setHeaders({
                     Authorization: `Bearer ${response.data.token}`
@@ -34,18 +46,19 @@ export const AuthModule = {
         logout(context) {
             context.commit('setToken', null)
             localStorage.setItem('token', '')
+            localStorage
         },
 
         async register(context, user) {
             try { 
                  const response = await authService.register(user)
-                 context.commit('setErrors', null)
+                 context.commit('setRegisterErrors', {email: '', password: ''})
                  return response
             } catch(exception) {
                 console.log(exception.response.data.errors) //eslint-disable-line
-                context.commit('setErrors', exception.response.data.errors)
+                context.commit('setRegisterErrors', exception.response.data.errors)
             }
-        }
+        },
     },
 
     getters: {
@@ -55,6 +68,14 @@ export const AuthModule = {
 
         errors(state) {
             return state.errors
+        },
+        
+        registerErrors(state) {
+            return state.registerErrors
+        },
+
+        user(state) {
+            return JSON.parse(state.user)
         }
     }
 }

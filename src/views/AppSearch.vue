@@ -1,5 +1,5 @@
 <template>
-  <input type="text" class="form-control" placeholder="Search Managers" v-model="search" @input="searchTermUpdated($event.target.value)"/>
+  <input type="text" class="form-control" placeholder="Search" v-model="search" @input="searchTermUpdated($event.target.value)"/>
 </template>
 
 <script>

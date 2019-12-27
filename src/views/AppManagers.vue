@@ -11,12 +11,17 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="manager in managers" :key="manager.id">
+    <tr v-for="(manager,index) in managers" :key="index">
       <th><img :src="manager.imageUrl"></th>
       <td>
         <h1><a @click="navigateToSingleManager(manager.id)" class="badge badge-info">{{manager.first_name + ' ' + manager.last_name}}</a></h1>
       </td>
-      <td></td>
+      <td v-if="manager.shop">
+        <h1><a @click="navigateToSingleShop(manager.shop.id)" class="badge badge-info">{{manager.shop.name}}</a></h1>
+      </td>
+      <td v-else>
+        Manager is aviable
+      </td>
     </tr>
   </tbody>
 </table>
@@ -45,6 +50,13 @@ export default {
     navigateToSingleManager(id) {
       this.$router.push({
         name: 'manager',
+        params: {id}
+      })
+    },
+
+    navigateToSingleShop(id) {
+      this.$router.push({
+        name: 'shop',
         params: {id}
       })
     },

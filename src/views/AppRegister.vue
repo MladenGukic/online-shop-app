@@ -63,7 +63,7 @@ export default {
 
     computed: {
         ...mapGetters({
-            registerError: 'errors'
+            registerError: 'registerErrors'
         })
     },
     methods:
@@ -75,7 +75,7 @@ export default {
         onSubmit() {
             this.register(this.form)
             .then(() => {
-                if(this.registerError === null)
+                if(!this.registerError.email)
                 this.$router.push({
                     name: 'login'
                 })

@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <router-link class="nav-link" to="/register">Register <span class="sr-only">(current)</span></router-link>
+          <router-link class="nav-link" to="/register" v-if="!isUserAuthenticated">Register <span class="sr-only">(current)</span></router-link>
         </li>
         <li class="nav-item">
         <router-link class="nav-link" to="/managers" v-if="isUserAuthenticated">All Managers</router-link>

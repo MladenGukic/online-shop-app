@@ -1,10 +1,11 @@
 import {managersService} from '../services/ManagersService'
+import {shopsService} from '../services/ShopsService'
 
 export const ManagerModule = {
     state: {
         managers: [],
         manager: {},
-        managerErrors: null 
+        managerErrors: {email: '', imageUrl: ''}
     },
 
     mutations: {
@@ -36,22 +37,35 @@ export const ManagerModule = {
             )
         },
 
-        addManager(context, manager) {
-            return managersService.add(manager)
-            .catch(response => context.commit('setManagerErrors', response.data.errors))
+        async addManager(context, {manager, shop_id}) {
+            try {
+                const response = await managersService.add(manager)
+                return context.dispatch('updateManagerId', { manager: { manager_id: response.data.id }, id: shop_id })
+                
+            }
+            catch (exception) {
+                context.commit('setManagerErrors', exception.response.data.errors)
+            }
+        },
+
+        updateManagerId(context,{manager, id}) {
+            if(id) {
+                return shopsService.setManager(manager, id)
+            }
+            return
         }
     },
 
     getters: {
         managers(state) {
-            return state.managers
+            return state.managers.reverse()
         },
 
         manager(state) {
             return state.manager
         },
 
-        managerErros(state) {
+        managerErrors(state) {
             return state.managerErrors
         }
     }

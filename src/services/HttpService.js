@@ -7,18 +7,18 @@ const BASE_URL =  axios.defaults.baseURL = 'http://localhost:8000/api/'
         this.configureAxios(
             BASE_URL, { 
             accept:'application/json', 
-            authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
             }
         )
         this.axios = axios
     }
 
-    configureAxios(baseUrl) {
-
+    configureAxios(baseUrl, headers = {}) {
         axios.defaults.baseURL = baseUrl
+        this.setHeaders(headers)
     }
 
     setHeaders(headers) {
-        axios.defaults.authorization = headers
+        axios.defaults.headers = headers
     }
  }
