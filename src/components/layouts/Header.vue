@@ -26,8 +26,8 @@
          <button class="btn btn-outline-danger my-2 my-sm-0" @click="onLogout">Logout</button>
         </li> 
         <li class="nav-item" v-else>
-          <router-link class="nav-link" to="/login">Login</router-link>
-        </li>
+         <button class="btn btn-outline-success my-2 my-sm-0" @click="navigateToLogin">Login</button>
+        </li> 
       </ul>
     </div>
   </nav>
@@ -55,6 +55,12 @@ export default {
         .then(() => {this.$router.push({
           name: 'login'
         })})
+      },
+
+      navigateToLogin() {
+        this.$router.push({
+          name: 'login'
+        })
       }
     }
 }

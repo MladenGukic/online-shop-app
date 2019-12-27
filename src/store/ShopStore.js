@@ -4,29 +4,41 @@ export const ShopModule = {
     state: {
         shops: [],
         shop: {},
-        shopErrors: {name: '', logoUrl: ''}
+        shopErrors: {name: '', logoUrl: ''},
+        pages: '',
+        name: ''
     },
 
     mutations: {
         setShops(state,shops) {
             state.shops = shops
         },
-
         setShop(state, shop) {
             state.shop = shop
         },
 
         setShopErrors(state, errors) {
             state.shopErrors = errors
+        },
+
+        setNextPage(state, page) {
+            state.pages = page
+        },
+
+        setName(state, name) {
+            state.name = name
         }
     },
 
     actions: {
-        fetchShops(context, name) {
-            return shopsService.getAll(name)
+        fetchShops(context, {name, page}) {
+            return shopsService.getAll(name, page)
             .then(
                 response => {
-                    context.commit('setShops', response.data)
+                    context.commit('setName', name)
+                    console.log(response.data) //eslint-disable-line
+                    context.commit('setShops', response.data.data)
+                    context.commit('setNextPage', response.data)
             })
         },
 
@@ -54,6 +66,15 @@ export const ShopModule = {
 
         shopErrors(state) {
             return state.shopErrors
+        },
+
+        pages(state) {
+            console.log(state.pages) //eslint-disable-line
+            return state.pages
+        },
+
+        name(state) {
+            return state.name
         }
     }
 }

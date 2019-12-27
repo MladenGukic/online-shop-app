@@ -1,8 +1,8 @@
 import { HttpService } from './HttpService'
 
 class ShopsService extends HttpService {
-    getAll(name='') {
-        return this.axios.get('/shops', {params:{name}})
+    getAll(name='', page = '') {
+        return this.axios.get('/shops', {params:{name, page}})
     }
 
     get(id) {

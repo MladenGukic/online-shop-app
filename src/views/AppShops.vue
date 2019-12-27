@@ -22,7 +22,7 @@
     </tr>
   </tbody>
 </table>
-
+<h3><button class="badge badge-dark btn-large" v-if="currentPage"  @click="loadMore(name,currentPage)">Load more</button></h3>
 </div>
 </template>
 
@@ -39,7 +39,13 @@ export default {
   computed: {
     ...mapGetters({
       shops: 'shops',
+      pages: 'pages',
+      name: 'name'
     }),
+
+    currentPage() {
+      return !this.pages.next_page_url ? false : this.pages.current_page
+    }
   },
 
   methods: {
@@ -48,7 +54,7 @@ export default {
     }),
 
     onSearchTermChanged(term) {
-      this.fetchShops(term)
+      this.fetchShops({name:term, page: this.currentPage})
     },
 
     navigateToManager(id) {
@@ -63,11 +69,18 @@ export default {
         name: 'shop',
         params: {id}
       })
-    }
+    },
+
+    loadMore(name, currentPage) {
+      console.log(this.pages.current_page) //eslint-disable-line
+      this.fetchShops({name: name, page: currentPage + 1 })
+    },
+
   },
 
+  
   beforeRouteEnter(to, from, next) {
-    next(vm => vm.fetchShops())
+    next(vm => vm.fetchShops(name))
   }
 }
 </script>
