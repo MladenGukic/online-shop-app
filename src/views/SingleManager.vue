@@ -1,40 +1,49 @@
 <template>
   <div class="card">
-    <img :src="manager.imageUrl">
-  <h1>{{manager.first_name + ' ' + manager.last_name}}</h1>
-  <p class="title">Manager</p>
-  <p class="title">Email: {{manager.email}}</p>
-  <p v-if="manager.shop"><button @click="navigateToShop(manager.shop.id)">{{manager.shop.name}}</button></p>
-  <p v-else><button>Manager is aviable</button></p>
-</div>
+    <img :src="manager.imageUrl" />
+    <h1>{{manager.first_name + ' ' + manager.last_name}}</h1>
+    <p class="title">Manager</p>
+    <p class="title">Email: {{manager.email}}</p>
+    <p v-if="manager.shop">
+    <button @click="navigateToShop(manager.shop.id)">
+      {{manager.shop.name}} <br>
+      Articles: {{shop.articles.length}}
+    </button>
+  </p>
+    <p v-else><button>Manager is aviable</button></p>
+  </div>
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import { mapGetters, mapActions } from "vuex";
 export default {
-    computed: {
-        ...mapGetters({
-            manager:'manager',
-        })
-    },
+  computed: {
+    ...mapGetters({
+      manager: "manager",
+      shop: "shop"
+    })
+  },
 
-    methods: {
-        ...mapActions({
-            fetchManager: 'fetchManager',
-        }),
+  methods: {
+    ...mapActions({
+      fetchManager: "fetchManager",
+      fetchShop: "fetchShop"
+    }),
 
-        navigateToShop(id) {
-          this.$router.push({
-            name: 'shop',
-            params: {id}
-          })
-        }
-    },
-
-    created() {
-        this.fetchManager(this.$route.params.id)
+    navigateToShop(id) {
+      this.$router.push({
+        name: "shop",
+        params: { id }
+      });
     }
-}
+  },
+
+  created() {
+    this.fetchManager(this.$route.params.id);
+    if(this.manager.shop !== null)
+    this.fetchShop(this.manager.shop.id);
+  }
+};
 </script>
 
 <style>
@@ -70,7 +79,8 @@ a {
   color: black;
 }
 
-button:hover, a:hover {
+button:hover,
+a:hover {
   opacity: 0.7;
 }
 </style>

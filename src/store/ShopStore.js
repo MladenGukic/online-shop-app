@@ -6,8 +6,8 @@ export const ShopModule = {
         shop: {},
         shopErrors: {name: '', logoUrl: ''},
         pages: '',
-        name: ''
-    },
+        name: '',
+        },
 
     mutations: {
         setShops(state,shops) {
@@ -27,7 +27,7 @@ export const ShopModule = {
 
         setName(state, name) {
             state.name = name
-        }
+        },
     },
 
     actions: {
@@ -36,7 +36,6 @@ export const ShopModule = {
             .then(
                 response => {
                     context.commit('setName', name)
-                    console.log(response.data) //eslint-disable-line
                     context.commit('setShops', response.data.data)
                     context.commit('setNextPage', response.data)
             })
@@ -45,14 +44,21 @@ export const ShopModule = {
         fetchShop(context, id) {
             return shopsService.get(id)
             .then(
-                response => {context.commit('setShop', response.data)
+                response => {
+                    context.commit('setShop', response.data)
             })
+        },
+
+        deleteShop(context, id) {
+            return shopsService.delete(id)
         },
 
         addShop(context, shop)  {
             return shopsService.add(shop)
+            .then(() =>{context.commit('setShopErrors', {name: '', logoUrl: ''})})
             .catch(error => context.commit('setShopErrors',error.response.data.errors))
         },
+        
     },
 
     getters: {
@@ -69,12 +75,12 @@ export const ShopModule = {
         },
 
         pages(state) {
-            console.log(state.pages) //eslint-disable-line
             return state.pages
         },
 
         name(state) {
             return state.name
-        }
+        },
     }
 }
+

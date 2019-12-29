@@ -5,7 +5,7 @@ export const ManagerModule = {
     state: {
         managers: [],
         manager: {},
-        managerErrors: {email: '', imageUrl: ''}
+        managerErrors: {first_name: false,last_name:false,email:false, imageUrl:false }
     },
 
     mutations: {
@@ -19,7 +19,7 @@ export const ManagerModule = {
 
         setManagerErrors(state, errors) {
             state.managerErrors = errors
-        }
+        },
     },
 
     actions: {
@@ -31,15 +31,20 @@ export const ManagerModule = {
         },
 
         fetchManager(context, id) {
+            if(id !== null) {
             return managersService.get(id)
             .then(
                 response => {context.commit('setManager', response.data)}
             )
+            } else {
+                return
+            }
         },
 
         async addManager(context, {manager, shop_id}) {
             try {
                 const response = await managersService.add(manager)
+                context.commit('setManagerErrors', false)
                 return context.dispatch('updateManagerId', { manager: { manager_id: response.data.id }, id: shop_id })
                 
             }

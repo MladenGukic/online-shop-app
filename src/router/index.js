@@ -48,6 +48,14 @@ const routes = [
     }
   },
   {
+    path: '/edit/:id',
+    name: 'edit',
+    component: AddShop,
+    meta: {
+      guest: false
+    }
+  },
+  {
     path: '/shop/create',
     name: 'add-shop',
     component: AddShop,
@@ -60,6 +68,14 @@ const routes = [
     name: 'shop',
     component: SingleShop,
     meta: {
+      guest: true
+    }
+  },
+  {
+    path: '/managers/:id',
+    name: 'manager',
+    component: SingleManager,
+    meta: {
       guest: false
     }
   },
@@ -71,14 +87,7 @@ const routes = [
       guest: false
     }
   },
-  {
-    path: '/managers/:id',
-    name: 'manager',
-    component: SingleManager,
-    meta: {
-      guest: false
-    }
-  },
+  
   {
     path: '/managers/create',
     name: 'addManager',

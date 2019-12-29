@@ -1,90 +1,142 @@
 <template>
   <form class="text-center border border-light p-5" @submit.prevent="onSubmit">
-
     <p class="h4 mb-4">Sign up</p>
 
     <div class="form-row mb-4">
-        <div class="col">
-            <!-- First name -->
-            <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name" v-model="form.first_name" required>
-        </div>
-        <div class="col">
-            <!-- Last name -->
-            <input type="text" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name" v-model="form.last_name" required>
-        </div>
+      <div class="col">
+        <!-- First name -->
+        <input
+          type="text"
+          id="defaultRegisterFormFirstName"
+          class="form-control"
+          placeholder="First name"
+          v-model="form.first_name"
+          required
+        />
+        <div class="alert alert-danger" role="alert" v-if="registerError.first_name">
+      <strong>{{registerError.first_name[0]}}</strong>
+    </div>
+      </div>
+      <div class="col">
+        <!-- Last name -->
+        <input
+          type="text"
+          id="defaultRegisterFormLastName"
+          class="form-control"
+          placeholder="Last name"
+          v-model="form.last_name"
+          required
+        />
+        <div class="alert alert-danger" role="alert" v-if="registerError.last_name">
+      <strong>{{registerError.last_name[0]}}</strong>
+    </div>
+      </div>
     </div>
 
     <!-- E-mail -->
-    <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail" v-model="form.email" required>
+    <input
+      type="email"
+      id="defaultRegisterFormEmail"
+      class="form-control mb-4"
+      placeholder="E-mail"
+      v-model="form.email"
+      required
+    />
     <div class="alert alert-danger" role="alert" v-if="registerError.email">
-        <strong> {{registerError.email[0]}} </strong>
-      </div>
+      <strong>{{registerError.email[0]}}</strong>
+    </div>
     <!-- Password -->
-    <input type="password" id="defaultRegisterFormPassword" name="password" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock" pattern="(?=.*\d)(?=.*[a-z]).{8,}" v-model="form.password" required>
-    <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
-        At least 8 characters and 1 digit
-    </small>
+    <input
+      type="password"
+      id="defaultRegisterFormPassword"
+      name="password"
+      class="form-control"
+      placeholder="Password"
+      aria-describedby="defaultRegisterFormPasswordHelpBlock"
+      pattern="(?=.*\d)(?=.*[a-z]).{8,}"
+      v-model="form.password"
+      required
+    />
+    <small
+      id="defaultRegisterFormPasswordHelpBlock"
+      class="form-text text-muted mb-4"
+    >At least 8 characters and 1 digit</small>
 
-    <input type="password" id="defaultRegisterConfirmPassword" name="password_confirmation" class="form-control" placeholder="Confirm" aria-describedby="defaultRegisterFormPasswordHelpBlock" v-model="form.password_confirm" required>
-    <small id="defaultRegisterConfirmPasswordHelpBlock" class="form-text text-muted mb-4">
-        Confirm password
-    </small>
+    <input
+      type="password"
+      id="defaultRegisterConfirmPassword"
+      name="password_confirmation"
+      class="form-control"
+      placeholder="Confirm"
+      aria-describedby="defaultRegisterFormPasswordHelpBlock"
+      v-model="form.password_confirm"
+      required
+    />
+    <small
+      id="defaultRegisterConfirmPasswordHelpBlock"
+      class="form-text text-muted mb-4"
+    >Confirm password</small>
     <div class="alert alert-danger" role="alert" v-if="registerError.password_confirm">
-        <strong> {{registerError.password_confirm[0]}} </strong>
-      </div>
+      <strong>{{registerError.password_confirm[0]}}</strong>
+    </div>
 
     <!-- Newsletter -->
     <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="defaultRegisterFormNewsletter" required>
-        <label class="custom-control-label" for="defaultRegisterFormNewsletter">I accept terms and conditions</label>
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        id="defaultRegisterFormNewsletter"
+        required
+      />
+      <label
+        class="custom-control-label"
+        for="defaultRegisterFormNewsletter"
+      >I accept terms and conditions</label>
     </div>
 
     <!-- Sign up button -->
     <button class="btn btn-info my-4 btn-block" type="submit">Sign in</button>
     <!-- Social register -->
-</form>
-<!-- Default form register -->
+  </form>
+  <!-- Default form register -->
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import { mapGetters, mapActions } from "vuex";
 export default {
-    data() {
-        return {
-            form: {
-                first_name: '',
-                last_name: '',
-                email: '',
-                password: '',
-                password_confirm: ''
-            }
-        }
-    },
+  data() {
+    return {
+      form: {
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        password_confirm: ""
+      }
+    };
+  },
 
-    computed: {
-        ...mapGetters({
-            registerError: 'registerErrors'
-        })
-    },
-    methods:
-    {
-        ...mapActions({
-            register: 'register'
-        }),
+  computed: {
+    ...mapGetters({
+      registerError: "registerErrors"
+    })
+  },
+  methods: {
+    ...mapActions({
+      register: "register"
+    }),
 
-        onSubmit() {
-            this.register(this.form)
-            .then(() => {
-                if(!this.registerError.email)
-                this.$router.push({
-                    name: 'login'
-                })
-            })
-        }
+    onSubmit() {
+      this.register(this.form).then(() => {
+        if (!this.registerError.email && !this.registerError.password)
+          this.$router.push({
+            name: "shops"
+          });
+      });
     }
-}
+  }
+};
 </script>
 
 <style>
-
 </style>
