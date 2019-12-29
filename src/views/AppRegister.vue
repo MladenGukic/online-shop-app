@@ -14,8 +14,8 @@
           required
         />
         <div class="alert alert-danger" role="alert" v-if="registerError.first_name">
-      <strong>{{registerError.first_name[0]}}</strong>
-    </div>
+          <strong>{{registerError.first_name[0]}}</strong>
+        </div>
       </div>
       <div class="col">
         <!-- Last name -->
@@ -28,8 +28,8 @@
           required
         />
         <div class="alert alert-danger" role="alert" v-if="registerError.last_name">
-      <strong>{{registerError.last_name[0]}}</strong>
-    </div>
+          <strong>{{registerError.last_name[0]}}</strong>
+        </div>
       </div>
     </div>
 

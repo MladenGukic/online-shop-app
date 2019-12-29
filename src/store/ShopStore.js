@@ -4,13 +4,13 @@ export const ShopModule = {
     state: {
         shops: [],
         shop: {},
-        shopErrors: {name: '', logoUrl: ''},
+        shopErrors: { name: '', logoUrl: '' },
         pages: '',
         name: '',
-        },
+    },
 
     mutations: {
-        setShops(state,shops) {
+        setShops(state, shops) {
             state.shops = shops
         },
         setShop(state, shop) {
@@ -31,34 +31,34 @@ export const ShopModule = {
     },
 
     actions: {
-        fetchShops(context, {name, page}) {
+        fetchShops(context, { name, page }) {
             return shopsService.getAll(name, page)
-            .then(
-                response => {
-                    context.commit('setName', name)
-                    context.commit('setShops', response.data.data)
-                    context.commit('setNextPage', response.data)
-            })
+                .then(
+                    response => {
+                        context.commit('setName', name)
+                        context.commit('setShops', response.data.data)
+                        context.commit('setNextPage', response.data)
+                    })
         },
 
         fetchShop(context, id) {
             return shopsService.get(id)
-            .then(
-                response => {
-                    context.commit('setShop', response.data)
-            })
+                .then(
+                    response => {
+                        context.commit('setShop', response.data)
+                    })
         },
 
         deleteShop(context, id) {
             return shopsService.delete(id)
         },
 
-        addShop(context, shop)  {
+        addShop(context, shop) {
             return shopsService.add(shop)
-            .then(() =>{context.commit('setShopErrors', {name: '', logoUrl: ''})})
-            .catch(error => context.commit('setShopErrors',error.response.data.errors))
+                .then(() => { context.commit('setShopErrors', { name: '', logoUrl: '' }) })
+                .catch(error => context.commit('setShopErrors', error.response.data.errors))
         },
-        
+
     },
 
     getters: {

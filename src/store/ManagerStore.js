@@ -1,11 +1,11 @@
-import {managersService} from '../services/ManagersService'
-import {shopsService} from '../services/ShopsService'
+import { managersService } from '../services/ManagersService'
+import { shopsService } from '../services/ShopsService'
 
 export const ManagerModule = {
     state: {
         managers: [],
         manager: {},
-        managerErrors: {first_name: false,last_name:false,email:false, imageUrl:false }
+        managerErrors: { first_name: false, last_name: false, email: false, imageUrl: false }
     },
 
     mutations: {
@@ -14,7 +14,7 @@ export const ManagerModule = {
         },
 
         setManager(state, manager) {
-            state.manager= manager
+            state.manager = manager
         },
 
         setManagerErrors(state, errors) {
@@ -25,36 +25,37 @@ export const ManagerModule = {
     actions: {
         fetchManagers(context, first_name) {
             return managersService.getAll(first_name)
-            .then(
-                response => {context.commit('setManagers', response.data)
-            })
+                .then(
+                    response => {
+                        context.commit('setManagers', response.data)
+                    })
         },
 
         fetchManager(context, id) {
-            if(id !== null) {
-            return managersService.get(id)
-            .then(
-                response => {context.commit('setManager', response.data)}
-            )
+            if (id !== null) {
+                return managersService.get(id)
+                    .then(
+                        response => { context.commit('setManager', response.data) }
+                    )
             } else {
                 return
             }
         },
 
-        async addManager(context, {manager, shop_id}) {
+        async addManager(context, { manager, shop_id }) {
             try {
                 const response = await managersService.add(manager)
                 context.commit('setManagerErrors', false)
                 return context.dispatch('updateManagerId', { manager: { manager_id: response.data.id }, id: shop_id })
-                
+
             }
             catch (exception) {
                 context.commit('setManagerErrors', exception.response.data.errors)
             }
         },
 
-        updateManagerId(context,{manager, id}) {
-            if(id) {
+        updateManagerId(context, { manager, id }) {
+            if (id) {
                 return shopsService.setManager(manager, id)
             }
             return

@@ -1,11 +1,11 @@
-import {authService } from './../services/AuthService'
+import { authService } from './../services/AuthService'
 
 export const AuthModule = {
     state: {
         token: localStorage.getItem('token'),
         errors: null,
-        registerErrors: {email: '', password: ''},
-        },
+        registerErrors: { email: '', password: '' },
+    },
 
     mutations: {
         setToken(state, token) {
@@ -22,7 +22,7 @@ export const AuthModule = {
     },
 
     actions: {
-        async login(context, {email, password}) {
+        async login(context, { email, password }) {
             try {
                 const response = await authService.login(email, password)
                 context.commit('setToken', response.data.token)
@@ -32,7 +32,7 @@ export const AuthModule = {
                     Authorization: `Bearer ${response.data.token}`
                 })
                 localStorage.setItem('token', response.data.token)
-            } catch(exception) {
+            } catch (exception) {
                 context.commit('setErrors', exception.response.data.error)
             }
         },
@@ -44,17 +44,17 @@ export const AuthModule = {
         },
 
         async register(context, user) {
-            try { 
-                 const response = await authService.register(user)
-                 context.commit('setToken', response.data.token)
+            try {
+                const response = await authService.register(user)
+                context.commit('setToken', response.data.token)
                 localStorage.setItem('user', JSON.stringify(response.data.user))
-                context.commit('setRegisterErrors', {email: '', password: ''})
+                context.commit('setRegisterErrors', { email: '', password: '' })
                 authService.setHeaders({
                     Authorization: `Bearer ${response.data.token}`
                 })
                 localStorage.setItem('token', response.data.token)
-                 return response
-            } catch(exception) {
+                return response
+            } catch (exception) {
                 context.commit('setRegisterErrors', exception.response.data.errors)
             }
         },
@@ -68,7 +68,7 @@ export const AuthModule = {
         errors(state) {
             return state.errors
         },
-        
+
         registerErrors(state) {
             return state.registerErrors
         },

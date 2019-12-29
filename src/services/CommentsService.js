@@ -1,7 +1,7 @@
 import { HttpService } from './HttpService'
 
 class CommentsService extends HttpService {
-    
+
     getComments() {
         return this.axios.get('/comments')
     }

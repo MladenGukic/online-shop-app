@@ -1,8 +1,8 @@
-import {articlesService} from '../services/ArticlesService'
+import { articlesService } from '../services/ArticlesService'
 
 export const ArticleModule = {
 
-    state: {    
+    state: {
         articleErrors: null
     },
 
@@ -11,23 +11,23 @@ export const ArticleModule = {
             state.articleErrors = errors
         }
     },
-    
+
 
     actions: {
         async addArticle(context, article) {
             try {
-                 await articlesService.add(article)
-                  return context.commit('setArticleErrors', null)
+                await articlesService.add(article)
+                return context.commit('setArticleErrors', null)
             }
             catch (exception) {
-                return context.commit('setArticleErrors',  exception.response.data.errors)
+                return context.commit('setArticleErrors', exception.response.data.errors)
             }
         }
     },
 
     getters: {
-            articleErrors(state) {
-                return state.articleErrors
-            }
+        articleErrors(state) {
+            return state.articleErrors
+        }
     }
 }

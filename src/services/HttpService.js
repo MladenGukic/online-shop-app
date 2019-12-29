@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-const BASE_URL =  axios.defaults.baseURL = 'http://localhost:8000/api/'
+const BASE_URL = axios.defaults.baseURL = 'http://localhost:8000/api/'
 
- export class HttpService {
+export class HttpService {
     constructor() {
         this.configureAxios(
-            BASE_URL, { 
-            accept:'application/json', 
+            BASE_URL, {
+            accept: 'application/json',
             Authorization: `Bearer ${localStorage.getItem('token')}`,
-            }
+        }
         )
         this.axios = axios
     }
@@ -21,4 +21,4 @@ const BASE_URL =  axios.defaults.baseURL = 'http://localhost:8000/api/'
     setHeaders(headers) {
         axios.defaults.headers = headers
     }
- }
+}

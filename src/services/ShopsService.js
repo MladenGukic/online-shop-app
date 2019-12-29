@@ -1,8 +1,8 @@
 import { HttpService } from './HttpService'
 
 class ShopsService extends HttpService {
-    getAll(name='', page = 1) {
-        return this.axios.get('/shops', {params:{name, page}})
+    getAll(name = '', page = 1) {
+        return this.axios.get('/shops', { params: { name, page } })
     }
 
     get(id) {
@@ -21,6 +21,6 @@ class ShopsService extends HttpService {
         return this.axios.delete(`/shops/${id}`)
     }
 
-} 
+}
 
 export const shopsService = new ShopsService()

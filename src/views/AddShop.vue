@@ -6,24 +6,14 @@
           <h3>Add Shop</h3>
         </div>
         <label for="exampleFormControlInput1">Name</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Shop Name"
-          v-model="form.name"
-        />
+        <input type="text" class="form-control" placeholder="Shop Name" v-model="form.name" />
         <div class="alert alert-danger" role="alert" v-if="shopErrors.name">
           <strong>{{shopErrors.name[0]}}</strong>
         </div>
       </div>
       <div class="form-group">
         <label for="exampleFormControlInput1">Logo</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Logo URL"
-          v-model="form.logoUrl"
-        />
+        <input type="text" class="form-control" placeholder="Logo URL" v-model="form.logoUrl" />
         <div class="alert alert-danger" role="alert" v-if="shopErrors.logoUrl">
           <strong>{{shopErrors.logoUrl[0]}}</strong>
         </div>
@@ -71,14 +61,13 @@ export default {
 
     onSubmit() {
       this.addShop(this.form).then(() => {
-        if(!this.shopErrors.name) {
+        if (!this.shopErrors.name) {
           this.$router.push({
-          name: "shops"
-        });
+            name: "shops"
+          });
         } else {
-          return
+          return;
         }
-        
       });
     },
 

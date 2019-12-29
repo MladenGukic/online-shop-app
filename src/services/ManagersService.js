@@ -1,9 +1,9 @@
 import { HttpService } from './HttpService'
 
-class ManagersService extends HttpService  {
-        
+class ManagersService extends HttpService {
+
     getAll(first_name = '') {
-        return this.axios.get('/managers', {params:{first_name}})
+        return this.axios.get('/managers', { params: { first_name } })
     }
 
     get(id) {

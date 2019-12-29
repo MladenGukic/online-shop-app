@@ -5,12 +5,15 @@
     <p class="title">Manager</p>
     <p class="title">Email: {{manager.email}}</p>
     <p v-if="manager.shop">
-    <button @click="navigateToShop(manager.shop.id)">
-      {{manager.shop.name}} <br>
-      Articles: {{shop.articles.length}}
-    </button>
-  </p>
-    <p v-else><button>Manager is aviable</button></p>
+      <button @click="navigateToShop(manager.shop.id)">
+        {{manager.shop.name}}
+        <br />
+        Articles: {{shop.articles.length}}
+      </button>
+    </p>
+    <p v-else>
+      <button>Manager is aviable</button>
+    </p>
   </div>
 </template>
 
@@ -40,8 +43,7 @@ export default {
 
   created() {
     this.fetchManager(this.$route.params.id);
-    if(this.manager.shop !== null)
-    this.fetchShop(this.manager.shop.id);
+    if (this.manager.shop !== null) this.fetchShop(this.manager.shop.id);
   }
 };
 </script>

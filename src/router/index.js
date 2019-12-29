@@ -39,7 +39,7 @@ const routes = [
       guest: true
     }
   },
-  { 
+  {
     path: '/my-shop',
     name: 'my-shop',
     component: UsersShop,
@@ -87,7 +87,7 @@ const routes = [
       guest: false
     }
   },
-  
+
   {
     path: '/managers/create',
     name: 'addManager',
